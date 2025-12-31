@@ -1,0 +1,123 @@
+
+
+<% layout("layouts/boilerplate") %>
+
+<div class="container mt-3">
+  <div class="row justify-content-center">
+    <div class="col-md-8 col-lg-7">
+
+      <h3 class="mb-3 fw-bold">Create new Listing</h3>
+
+      <form
+        method="POST"
+        action="/listings"
+        class="needs-validation create-listing-form"
+        novalidate
+        enctype="multipart/form-data"
+      >
+
+        <!-- TITLE -->
+        <div class="mb-2">
+          <label class="form-label">Title</label>
+          <input
+            name="listing[title]"
+            type="text"
+            class="form-control"
+            placeholder="Enter listing title"
+            required
+          />
+        </div>
+
+        <!-- DESCRIPTION -->
+        <div class="mb-2">
+          <label class="form-label">Description</label>
+          <textarea
+            name="listing[description]"
+            class="form-control"
+            rows="2"
+            placeholder="Write something about the place"
+            required
+          ></textarea>
+        </div>
+
+        <!-- IMAGE -->
+        <div class="mb-2">
+          <label class="form-label">Upload Listing Image</label>
+          <input
+            type="file"
+            name="image"
+            class="form-control"
+            required
+          />
+        </div>
+
+        <!-- PRICE + COUNTRY -->
+        <div class="row">
+          <div class="col-4 mb-2">
+            <label class="form-label">Price (₹ / night)</label>
+            <input
+              name="listing[price]"
+              type="number"
+              class="form-control"
+              placeholder="1200"
+              required
+            />
+          </div>
+
+          <div class="col-8 mb-2">
+            <label class="form-label">Country</label>
+            <input
+              name="listing[country]"
+              type="text"
+              class="form-control"
+              placeholder="India"
+              required
+            />
+          </div>
+        </div>
+
+        <!-- LOCATION -->
+        <div class="mb-2">
+          <label class="form-label">Location</label>
+          <input
+            name="listing[location]"
+            type="text"
+            class="form-control"
+            placeholder="Jaipur, Rajasthan"
+            required
+          />
+        </div>
+
+        <!-- CATEGORY (🔥 REQUIRED FOR FILTERS) -->
+        <div class="mb-3">
+          <label class="form-label">Category</label>
+          <select
+            name="listing[category]"
+            class="form-select"
+            required
+          >
+            <option value="">Select a category</option>
+            <option value="Trending">Trending</option>
+            <option value="Rooms">Rooms</option>
+            <option value="Iconic Cities">Iconic Cities</option>
+            <option value="Mountains">Mountains</option>
+            <option value="Castle">Castle</option>
+            <option value="Amazing Pools">Amazing Pools</option>
+            <option value="Camping">Camping</option>
+            <option value="Farms">Farms</option>
+            <option value="Arctic">Arctic</option>
+            <option value="Dome">Dome</option>
+            <option value="Island">Island</option>
+          </select>
+        </div>
+
+        <!-- SUBMIT -->
+        <button class="btn btn-dark w-100">
+          Add Listing
+        </button>
+
+      </form>
+
+    </div>
+  </div>
+</div>

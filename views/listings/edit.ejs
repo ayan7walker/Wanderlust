@@ -1,0 +1,66 @@
+<% layout("layouts/boilerplate") %>
+
+  <div class="container mt-5">
+    <div class="row justify-content-center">
+      <div class="col-8">
+
+        <h3 class="mb-4 fw-bold">Edit your Listing</h3>
+
+        <form method="POST" action="/listings/<%= listing._id %>?_method=PUT" novalidate class="needs-validation"
+          enctype="multipart/form-data">
+
+          <!-- Title -->
+          <div class="mb-3">
+            <label for="title" class="form-label">Title</label>
+            <input id="title" name="listing[title]" type="text" value="<%= listing.title %>" class="form-control"
+              required>
+          </div>
+
+          <!-- Description -->
+          <div class="mb-3">
+            <label for="description" class="form-label">Description</label>
+            <textarea id="description" name="listing[description]" class="form-control" rows="3"
+              required><%= listing.description %></textarea>
+          </div>
+
+
+ <div class="mb-3">
+  original Listing Image <br/>
+
+  <img src="<%= originalImageUrl %>">
+  </div>
+
+
+
+          <div class="mb-3">
+            <label for="image" class="form-label"> Upload New Image</label>
+            <input id="image" name="listing[image]" type="file" class="form-control" required>
+          </div>
+
+          <div class="row">
+            <!-- Price -->
+            <div class="mb-3 col-4">
+              <label for="price" class="form-label">Price</label>
+              <input id="price" name="listing[price]" value="<%= listing.price %>" class="form-control" required>
+            </div>
+
+            <!-- Country -->
+            <div class="mb-3 col-8">
+              <label for="country" class="form-label">Country</label>
+              <input id="country" name="listing[country]" type="text" value="<%= listing.country %>"
+                class="form-control" required>
+            </div>
+          </div>
+
+          <!-- Location -->
+          <div class="mb-3">
+            <label for="location" class="form-label">Location</label>
+            <input id="location" name="listing[location]" type="text" value="<%= listing.location %>"
+              class="form-control" required>
+          </div>
+
+          <button class="btn btn-dark edit-btn">Save Changes</button>
+        </form>
+      </div>
+    </div>
+  </div>
