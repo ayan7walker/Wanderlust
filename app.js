@@ -1,5 +1,3 @@
-
-
 /* ================= ENV CONFIG ================= */
 if (process.env.NODE_ENV !== "production") {
   require("dotenv").config();
@@ -35,6 +33,11 @@ const app = express();
 /* ================= DATABASE ================= */
 const dbUrl = process.env.ATLASDB_URL;
 
+// ✅ DEPLOY-SAFE SESSION SECRET
+const SESSION_SECRET =
+  process.env.SECRET || "wanderlust_fallback_secret";
+
+/* ================= DB CONNECT ================= */
 mongoose
   .connect(dbUrl)
   .then(() => console.log("✅ MongoDB connected"))
@@ -54,11 +57,11 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(methodOverride("_method"));
 
-/* ================= SESSION STORE (FINAL & SAFE) ================= */
+/* ================= SESSION STORE ================= */
 const store = MongoStore.default.create({
   mongoUrl: dbUrl,
   crypto: {
-    secret: process.env.SECRET,
+    secret: SESSION_SECRET,
   },
   touchAfter: 24 * 3600, // 24 hours
 });
@@ -72,7 +75,7 @@ app.use(
   session({
     store,
     name: "wanderlust",
-    secret: process.env.SECRET,
+    secret: SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
     cookie: {
@@ -108,7 +111,7 @@ app.use("/", userRouter);
 app.use("/listings", listingRouter);
 app.use("/listings/:id/reviews", reviewRouter);
 
-/* ================= 404 (EXPRESS 5 SAFE) ================= */
+/* ================= 404 ================= */
 app.use((req, res, next) => {
   next(new ExpressError("Page Not Found", 404));
 });
@@ -120,10 +123,13 @@ app.use((err, req, res, next) => {
   res.status(statusCode).render("error.ejs", { err });
 });
 
-/* ================= SERVER ================= */
-app.listen(8080, () => {
-  console.log("🚀 Server running at http://localhost:8080");
+/* ================= SERVER (RENDER FIX) ================= */
+const PORT = process.env.PORT || 8080;
+
+app.listen(PORT, () => {
+  console.log(`🚀 Server running on port ${PORT}`);
 });
+
 
 
 
